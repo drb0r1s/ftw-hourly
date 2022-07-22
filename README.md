@@ -57,8 +57,12 @@ The *Seat system* is implemented through existing files that are already availab
 It is important to note that if the user buys only *one seat (default)*, he **will not be charged** any seat price *(1 seat = $0.00)*. If the user wants to buy *more than one seat*, he **will be charged** the price of the seat multiplied by the number of times the user bought the seat (e.g. 3 seats = $price * 3).
 
 ### I want to charge for each seat, as an additional payment, how can I do that?
-In order to *charge for each seat*, including the **first one**, you need to change the code in the location function:
-
+In order to *charge for each seat*, including the **first one**, you need to change the code in the function `resolveSeatPrice()` on location:
+```
+└── server
+    └── api-util
+        └── lineItemHelpers.js
+```
 
 ## Author
 
