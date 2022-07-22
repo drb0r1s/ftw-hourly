@@ -47,3 +47,11 @@ Location of the files:
   - After adding a *new time slot*, the number of seats will be *displayed right next to the time*.
 - User:
   - When the user wants to *book a certain teacher*, it will be **necessary** to select the *number of seats* he wants to book.
+
+## Author
+
+**drb0r1s**
+
+*Github:* **drb0r1s**<br>
+*Discord:* **boris**#1171<br>
+*Email:* **drb0r1sdev@gmail.com**
