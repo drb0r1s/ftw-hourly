@@ -75,6 +75,18 @@ In order to *exclude* the possibility of mandatory input related to the method o
         └── EditListingClassTypesForm
             └── EditListingClassTypesForm.js
 ```
+You need to delete the `validate` prop as follows:
+```js
+{checkboxHandler.online && <FieldTextInput
+  id="onlineClass"
+  name="onlineClass"
+  type="text"
+  label={onlineClassTitle}
+  placeholder={onlineClassPlaceholder}
+  maxLength={ONLINE_CLASS_MAX_LENGTH}
+  autoFocus
+/>}
+```
 
 ### How does charging per seat work?
 It is important to note that if the user buys only *one seat (default)*, he **will not be charged** any seat price *(1 seat = $0.00)*. If the user wants to buy *more than one seat*, he **will be charged** the price of the seat multiplied by the number of times the user bought the seat (e.g. 3 seats = $price * 3).
