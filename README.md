@@ -53,6 +53,29 @@ The *Seat system* is implemented through existing files that are already availab
 
 ## Additional information
 
+### How can I get information about what has been added/changed in the code in this update?
+**All important information** related to the code in this update can be found in the comments starting with `drb0r1s:`.<br />
+Example:
+```js
+/*
+  drb0r1s:
+  Based on all time slots in a given day,
+  the function determines the exact number of seats for the specified time.
+  Called every time startDate and startTime change.
+*/
+
+const getValidNumberOfSeats = (startTime, timeSlots) => {...}
+```
+
+### I don't want it to be mandatory to explain how online classes are provided, how can I change that?
+In order to *exclude* the possibility of mandatory input related to the method of providing online classes, it is necessary to change the code on the location:
+```
+└── src
+    └── forms
+        └── EditListingClassTypesForm
+            └── EditListingClassTypesForm.js
+```
+
 ### How does charging per seat work?
 It is important to note that if the user buys only *one seat (default)*, he **will not be charged** any seat price *(1 seat = $0.00)*. If the user wants to buy *more than one seat*, he **will be charged** the price of the seat multiplied by the number of times the user bought the seat (e.g. 3 seats = $price * 3).
 
@@ -77,20 +100,6 @@ exports.resolveSeatPrice = (listing, seats) => {
 };
 ```
 In this way, the logic related to payment can be **easily changed**.
-
-### How can I get information about what has been added/changed in the code in this update?
-**All important information** related to the code in this update can be found in the comments starting with `drb0r1s:`.<br />
-Example:
-```js
-/*
-  drb0r1s:
-  Based on all time slots in a given day,
-  the function determines the exact number of seats for the specified time.
-  Called every time startDate and startTime change.
-*/
-
-const getValidNumberOfSeats = (startTime, timeSlots) => {...}
-```
 
 ## Author
 
