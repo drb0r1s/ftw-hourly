@@ -44,3 +44,6 @@ Location of the files:
 - Provider:
   - It is necessary to add the **number of free seats** when adding each new time slot, including the *exception schedule*.
   - The number of seats that can be added ranges from: **1 - 10**.
+  - After adding a *new time slot*, the number of seats will be *displayed right next to the time*.
+- User:
+  - When the user wants to *book a certain teacher*, it will be **necessary** to select the *number of seats* he wants to book.
