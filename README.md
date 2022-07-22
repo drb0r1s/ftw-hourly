@@ -11,5 +11,5 @@
 ## Online/Offline Wizard Tab
 - When *creating* or *editing* a **Teacher profile**, a new Wizard Tab, called **Online/Offline**, has been added.
 - The **possibilities** provided by this new Wizard Tab are:
-  - The user can add information about whether he offers classes *online* and/or *offline*.
+  - The user can add information about whether he offers classes *online* and/or *offline*.<br />
   **INFO:** Without this information it is not possible to proceed further.
