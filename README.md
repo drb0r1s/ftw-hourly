@@ -68,7 +68,7 @@ const getValidNumberOfSeats = (startTime, timeSlots) => {...}
 ```
 
 ### I don't want it to be mandatory to explain how online classes are provided, how can I change that?
-In order to *exclude* the possibility of mandatory input related to the method of providing online classes, it is necessary to change the code on the location:
+In order to *exclude* the possibility of mandatory input related to the explanation of providing online classes, it is necessary to change the code on the location:
 ```
 └── src
     └── forms
