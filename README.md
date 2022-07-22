@@ -63,7 +63,7 @@ In order to *charge for each seat*, including the **first one**, you need to cha
     └── api-util
         └── lineItemHelpers.js
 ```
-All that needs to be done is to delete the *ternary operator* that checks if there is more than one seat.
+All that needs to be done is to delete the *ternary operator* that checks if there is more than one seat.<br />
 The function should look like this:
 ```js
 exports.resolveSeatPrice = (listing, seats) => {
@@ -76,6 +76,9 @@ exports.resolveSeatPrice = (listing, seats) => {
   return null;
 };
 ```
+In this way, the logic related to payment can be **easily changed**.
+
+## How can I get information about what has been added/changed in the code in this update?
 
 ## Author
 
