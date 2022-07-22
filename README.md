@@ -114,6 +114,9 @@ exports.resolveSeatPrice = (listing, seats) => {
 ```
 In this way, the logic related to payment can be **easily changed**.
 
+### How do I change the maximum and minimum number of seats?
+*Currently*, the **minimum number** of seats is **1**, and the **maximum** is **10** *(default)*. If you need to change this, it means that you need to change the code in the getSeats() function of the location:
+
 ## Author
 
 **drb0r1s**
