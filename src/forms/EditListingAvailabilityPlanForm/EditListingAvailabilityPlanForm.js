@@ -90,6 +90,12 @@ const filterEndHours = (availableEndHours, values, dayOfWeek, index) => {
     : availableEndHours.filter(pickBetween(currentEntry.startTime, nextEntry.startTime));
 };
 
+const getSeats = (min, max) => {
+  const seatsArray = [];
+  for(let i = min; i <= max; i++) seatsArray.push(i);
+  return seatsArray;
+}
+
 const getEntryBoundaries = (values, dayOfWeek, intl, findStartHours) => index => {
   const entries = values[dayOfWeek];
   const boundaryDiff = findStartHours ? 0 : 1;
@@ -123,6 +129,9 @@ const DailyPlan = props => {
   });
   const endTimePlaceholder = intl.formatMessage({
     id: 'EditListingAvailabilityPlanForm.endTimePlaceholder',
+  });
+  const seatsPlaceholder = intl.formatMessage({
+    id: 'EditListingAvailabilityPlanForm.seatsPlaceholder'
   });
 
   return (
@@ -182,6 +191,23 @@ const DailyPlan = props => {
                           ))}
                         </FieldSelect>
                       </div>
+                      <span className={css.dashBetweenTimes}>Seats:</span>
+                      <div className={css.field}>
+                        <FieldSelect
+                          id={`${name}.seats`}
+                          name={`${name}.seats`}
+                          selectClassName={css.fieldSelect}
+                        >
+                          <option disabled value="">
+                            {seatsPlaceholder}
+                          </option>
+                          {getSeats(1, 10).map(s => (
+                            <option value={s} key={s}>
+                              {s}
+                            </option>
+                          ))}
+                        </FieldSelect>
+                      </div>
                     </div>
                     <div
                       className={css.fieldArrayRemove}
@@ -198,7 +224,7 @@ const DailyPlan = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonSetHours}
-                  onClick={() => fields.push({ startTime: null, endTime: null })}
+                  onClick={() => fields.push({ startTime: null, endTime: null, seats: null })}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.setHours" />
                 </InlineTextButton>
@@ -206,7 +232,7 @@ const DailyPlan = props => {
                 <InlineTextButton
                   type="button"
                   className={css.buttonAddNew}
-                  onClick={() => fields.push({ startTime: null, endTime: null })}
+                  onClick={() => fields.push({ startTime: null, endTime: null, seats: null })}
                 >
                   <FormattedMessage id="EditListingAvailabilityPlanForm.addAnother" />
                 </InlineTextButton>
@@ -265,7 +291,7 @@ const EditListingAvailabilityPlanFormComponent = props => {
           values[day] ? entries.concat(values[day]) : entries;
         const hasUnfinishedEntries = !!weekdays
           .reduce(concatDayEntriesReducer, [])
-          .find(e => !e.startTime || !e.endTime);
+          .find(e => !e.startTime || !e.endTime || !e.seats);
 
         const { updateListingError } = fetchErrors || {};
 

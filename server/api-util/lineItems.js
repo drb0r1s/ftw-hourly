@@ -1,4 +1,4 @@
-const { calculateQuantityFromHours, calculateTotalFromLineItems } = require('./lineItemHelpers');
+const { calculateQuantityFromHours, calculateTotalFromLineItems, resolveSeatPrice } = require('./lineItemHelpers');
 const { types } = require('sharetribe-flex-sdk');
 const { Money } = types;
 
@@ -29,7 +29,7 @@ const PROVIDER_COMMISSION_PERCENTAGE = -10;
  */
 exports.transactionLineItems = (listing, bookingData) => {
   const unitPrice = listing.attributes.price;
-  const { startDate, endDate } = bookingData;
+  const { startDate, endDate, seats } = bookingData;
 
   /**
    * If you want to use pre-defined component and translations for printing the lineItems base price for booking,
@@ -47,14 +47,34 @@ exports.transactionLineItems = (listing, bookingData) => {
     includeFor: ['customer', 'provider'],
   };
 
+  
+  // drb0r1s: Obtaining the seat price, based on the number of seats.
+  const seatPrice = seats ? resolveSeatPrice(listing, seats) : null;
+  
+  /*
+    drb0r1s:
+    Adding a new line item defined as "seat".
+    The reason why "seat" is defined in the array is because if the price is null,
+    an empty array will be returned and this line will not affect the code.
+  */
+  
+  const seat = seatPrice ? [
+    {
+      code: 'line-item/seats',
+      unitPrice: seatPrice,
+      quantity: seats,
+      includeFor: ['customer', 'provider'],
+    }
+  ] : [];
+
   const providerCommission = {
     code: 'line-item/provider-commission',
-    unitPrice: calculateTotalFromLineItems([booking]),
+    unitPrice: calculateTotalFromLineItems([booking, ...seat]),
     percentage: PROVIDER_COMMISSION_PERCENTAGE,
     includeFor: ['provider'],
   };
 
-  const lineItems = [booking, providerCommission];
+  const lineItems = [booking, ...seat, providerCommission];
 
   return lineItems;
 };

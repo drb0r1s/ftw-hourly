@@ -172,9 +172,11 @@ export const initiateOrder = (orderParams, transactionId) => (dispatch, getState
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
+  // drb0r1s: Property "seats" is added here so that it can store information about the seats when going to the Checkout Page.
   const bookingData = {
     startDate: orderParams.bookingStart,
     endDate: orderParams.bookingEnd,
+    seats: orderParams.seats
   };
 
   const bodyParams = isTransition
@@ -309,9 +311,11 @@ export const speculateTransaction = (orderParams, transactionId) => (dispatch, g
     : TRANSITION_REQUEST_PAYMENT;
   const isPrivilegedTransition = isPrivileged(transition);
 
+  // drb0r1s: Property "seats" is added here so that it can store information about the seats when going to the Checkout Page.
   const bookingData = {
     startDate: orderParams.bookingStart,
     endDate: orderParams.bookingEnd,
+    seats: orderParams.seats
   };
 
   const params = {

@@ -54,9 +54,9 @@ const Weekday = props => {
         {availabilityPlan && hasEntry
           ? getEntries(availabilityPlan, dayOfWeek).map(e => {
               return (
-                <span className={css.entry} key={`${e.dayOfWeek}${e.startTime}`}>{`${
-                  e.startTime
-                } - ${e.endTime === '00:00' ? '24:00' : e.endTime}`}</span>
+                <span className={css.entry} key={`${e.dayOfWeek}${e.startTime}`}>
+                  {`${e.startTime} - ${e.endTime === '00:00' ? '24:00' : e.endTime}, ${e.seats} ${e.seats > 1 ? "seats" : "seat"}`}
+                </span>
               );
             })
           : null}
@@ -72,7 +72,7 @@ const Weekday = props => {
 // Create initial entry mapping for form's initial values
 const createEntryDayGroups = (entries = {}) =>
   entries.reduce((groupedEntries, entry) => {
-    const { startTime, endTime: endHour, dayOfWeek } = entry;
+    const { startTime, endTime: endHour, seats, dayOfWeek } = entry;
     const dayGroup = groupedEntries[dayOfWeek] || [];
     return {
       ...groupedEntries,
@@ -81,6 +81,7 @@ const createEntryDayGroups = (entries = {}) =>
         {
           startTime,
           endTime: endHour === '00:00' ? '24:00' : endHour,
+          seats: parseInt(seats)
         },
       ],
     };
@@ -101,12 +102,12 @@ const createEntriesFromSubmitValues = values =>
   WEEKDAYS.reduce((allEntries, dayOfWeek) => {
     const dayValues = values[dayOfWeek] || [];
     const dayEntries = dayValues.map(dayValue => {
-      const { startTime, endTime } = dayValue;
-      // Note: This template doesn't support seats yet.
-      return startTime && endTime
+      const { startTime, endTime, seats } = dayValue;
+
+      return startTime && endTime && seats
         ? {
             dayOfWeek,
-            seats: 1,
+            seats: parseInt(seats),
             startTime,
             endTime: endTime === '24:00' ? '00:00' : endTime,
           }
@@ -180,8 +181,8 @@ const EditListingAvailabilityPanel = props => {
   const initialValues = valuesFromLastSubmit
     ? valuesFromLastSubmit
     : createInitialValues(availabilityPlan);
-
-  const handleSubmit = values => {
+  
+    const handleSubmit = values => {
     setValuesFromLastSubmit(values);
 
     // Final Form can wait for Promises to return.
@@ -199,14 +200,13 @@ const EditListingAvailabilityPanel = props => {
 
   // Save exception click handler
   const saveException = values => {
-    const { availability, exceptionStartTime, exceptionEndTime } = values;
+    const { availability, exceptionStartTime, exceptionEndTime, exceptionSeats } = values;
 
-    // TODO: add proper seat handling
-    const seats = availability === 'available' ? 1 : 0;
-
+    const showSeats = availability === "available";
+    
     return onAddAvailabilityException({
       listingId: listing.id,
-      seats,
+      seats: showSeats ? parseInt(exceptionSeats) : 0,
       start: timestampToDate(exceptionStartTime),
       end: timestampToDate(exceptionEndTime),
     })
@@ -297,7 +297,10 @@ const EditListingAvailabilityPanel = props => {
                       />
                       <div className={css.exceptionAvailabilityStatus}>
                         {seats > 0 ? (
-                          <FormattedMessage id="EditListingAvailabilityPanel.exceptionAvailable" />
+                          <FormattedMessage
+                            id="EditListingAvailabilityPanel.exceptionAvailable"
+                            values={{ seatsInfo: `(${seats} ${seats > 1 ? "seats" : "seat"})` }}
+                          />
                         ) : (
                           <FormattedMessage id="EditListingAvailabilityPanel.exceptionNotAvailable" />
                         )}

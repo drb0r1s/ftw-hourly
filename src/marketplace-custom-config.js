@@ -117,6 +117,21 @@ export const filters = [
     },
   },
   {
+    id: 'classTypes',
+    label: 'Online/Offline',
+    type: 'SelectMultipleFilter',
+    group: 'secondary',
+    queryParamNames: ['pub_classTypes'],
+    config: {
+      searchMode: 'has_all',
+
+      options: [
+        { key: 'online', label: 'I do offer online sessions' },
+        { key: 'offline', label: 'I do offer offline sessions' },
+      ]
+    }
+  },
+  {
     id: 'certificate',
     label: 'Certificate',
     type: 'SelectSingleFilter',

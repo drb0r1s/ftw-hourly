@@ -46,6 +46,10 @@ export const EditListingPricingFormComponent = props => (
         id: translationKey,
       });
 
+      const pricePerSeatMessage = intl.formatMessage({
+        id: 'EditListingPricingForm.pricePerSeat'
+      });
+
       const pricePlaceholderMessage = intl.formatMessage({
         id: 'EditListingPricingForm.priceInputPlaceholder',
       });
@@ -95,6 +99,17 @@ export const EditListingPricingFormComponent = props => (
             className={css.priceInput}
             autoFocus
             label={pricePerUnitMessage}
+            placeholder={pricePlaceholderMessage}
+            currencyConfig={config.currencyConfig}
+            validate={priceValidators}
+          />
+
+          <FieldCurrencyInput
+            id="seatPrice"
+            name="seatPrice"
+            className={css.priceInput}
+            autoFocus
+            label={pricePerSeatMessage}
             placeholder={pricePlaceholderMessage}
             currencyConfig={config.currencyConfig}
             validate={priceValidators}

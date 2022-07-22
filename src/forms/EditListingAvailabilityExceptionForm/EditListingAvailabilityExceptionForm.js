@@ -428,6 +428,7 @@ const EditListingAvailabilityExceptionForm = props => {
           exceptionStartTime = null,
           exceptionEndDate,
           exceptionEndTime,
+          exceptionSeats
         } = values;
 
         const exceptionStartDay = extractDateFromFieldDateInput(exceptionStartDate);
@@ -490,6 +491,14 @@ const EditListingAvailabilityExceptionForm = props => {
           findNextBoundary(timeZone, TODAY)
         );
 
+        const seatsPlaceholder = intl.formatMessage({ id: 'EditListingAvailabilityExceptionForm.exceptionSeatsPlaceholder' });
+
+        const getSeats = (min, max) => {
+          const seatsArray = [];
+          for(let i = min; i <= max; i++) seatsArray.push(i);
+          return seatsArray;
+        }
+
         const submitInProgress = updateInProgress;
         const hasData =
           availability &&
@@ -497,7 +506,7 @@ const EditListingAvailabilityExceptionForm = props => {
           exceptionStartTime &&
           exceptionEndDate &&
           exceptionEndTime;
-        const submitDisabled = !hasData || invalid || disabled || submitInProgress;
+        const submitDisabled = !hasData || (availability === "available" ? !exceptionSeats : false) || invalid || disabled || submitInProgress;
 
         const classes = classNames(rootClassName || css.root, className);
 
@@ -641,6 +650,26 @@ const EditListingAvailabilityExceptionForm = props => {
                   </FieldSelect>
                 </div>
               </div>
+              {availability === "available" && <div className={css.formRow}>
+                <div className={css.field}>
+                  <FieldSelect
+                    name="exceptionSeats"
+                    id={`${idPrefix}.exceptionSeats`}
+                    className={exceptionStartDate ? css.fieldSelect : css.fieldSelectDisabled}
+                    selectClassName={exceptionStartDate ? css.select : css.selectDisabled}
+                    label={intl.formatMessage({
+                      id: 'EditListingAvailabilityExceptionForm.exceptionSeatsLabel',
+                    })}
+                  >
+                    <>
+                      <option disabled value="">{seatsPlaceholder}</option>
+                      {getSeats(1, 10).map(s => {
+                        return <option key={s} value={s}>{s}</option>;
+                      })}
+                    </>
+                  </FieldSelect>
+                </div>
+              </div>}
             </div>
 
             <div className={css.submitButton}>

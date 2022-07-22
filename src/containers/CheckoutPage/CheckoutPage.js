@@ -188,11 +188,18 @@ export class CheckoutPageComponent extends Component {
       // Fetch speculated transaction for showing price in booking breakdown
       // NOTE: if unit type is line-item/units, quantity needs to be added.
       // The way to pass it to checkout page is through pageData.bookingData
+
+      /*
+        drb0r1s:
+        The "seats" property is added as a parameter in this function so that the Checkout Page can collect seat count information from the Listing Page.
+      */
+     
       fetchSpeculatedTransaction(
         {
           listingId,
           bookingStart,
           bookingEnd,
+          seats: parseInt(bookingData.bookingSeats)
         },
         transactionId
       );
@@ -374,6 +381,7 @@ export class CheckoutPageComponent extends Component {
       listingId: pageData.listing.id,
       bookingStart: tx.booking.attributes.start,
       bookingEnd: tx.booking.attributes.end,
+      seats: tx.booking.attributes.seats,
       quantity: pageData.bookingData ? pageData.bookingData.quantity : null,
       ...optionalPaymentParams,
     };

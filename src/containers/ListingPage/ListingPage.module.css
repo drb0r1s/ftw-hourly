@@ -484,6 +484,42 @@
   }
 }
 
+.sectionClassTypes {
+  padding: 0 24px;
+  margin-bottom: 32px;
+
+  @media (--viewportMedium) {
+    padding: 0;
+    margin-bottom: 52px;
+  }
+}
+
+.classTypesTitle {
+  /* Font */
+  composes: h3 from global;
+  color: var(--matterColorAnti);
+
+  margin-top: 0;
+  margin-bottom: 20px;
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 28px;
+  }
+}
+
+.onlineClass {
+  margin-top: 0;
+  margin-bottom: 0;
+
+  /* Preserve newlines, but collapse other whitespace */
+  white-space: pre-line;
+
+  @media (--viewportMedium) {
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
+
 .locationTitle {
   /* Font */
   composes: h3 from global;

@@ -78,7 +78,7 @@ const FieldCheckboxComponent = props => {
           );
         }}
       </Field>
-      <label htmlFor={id} className={css.label}>
+      <label htmlFor={id} className={css.label} onClick={props.setCheckboxHandler}>
         <span className={css.checkboxWrapper}>
           <IconCheckbox className={svgClassName} {...successColorVariantMaybe} />
         </span>

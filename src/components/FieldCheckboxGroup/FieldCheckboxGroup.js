@@ -34,6 +34,7 @@ const FieldCheckboxRenderer = props => {
                 name={fields.name}
                 label={option.label}
                 value={option.key}
+                setCheckboxHandler={() => props.setCheckboxHandler(option.key)}
               />
             </li>
           );

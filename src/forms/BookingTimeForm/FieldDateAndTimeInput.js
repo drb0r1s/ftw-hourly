@@ -185,6 +185,26 @@ const getMonthlyTimeSlots = (monthlyTimeSlots, date, timeZone) => {
     : [];
 };
 
+/*
+  drb0r1s:
+  Based on all time slots in a given day,
+  the function determines the exact number of seats for the specified time.
+  Called every time startDate and startTime change.
+*/
+
+const getValidNumberOfSeats = (startTime, timeSlots) => {
+  let maxNumberOfSeats = 0;
+
+  for(let i = 0; i < timeSlots.length; i++) {
+    const slotStartTime = timeSlots[i].attributes.start.getTime();
+    const nextSlotStartTime = timeSlots[i + 1] !== undefined ? timeSlots[i + 1].attributes.start.getTime() : null;
+    
+    if(slotStartTime <= startTime && (nextSlotStartTime !== null ? startTime < nextSlotStartTime : true)) maxNumberOfSeats = timeSlots[i].attributes.seats;
+  }
+
+  return maxNumberOfSeats;
+};
+
 const Next = props => {
   const { currentMonth, timeZone } = props;
   const nextMonthDate = nextMonthFn(currentMonth, timeZone);
@@ -208,6 +228,7 @@ class FieldDateAndTimeInput extends Component {
 
     this.state = {
       currentMonth: getMonthStartInTimeZone(TODAY, props.timeZone),
+      maxNumberOfSeats: 0
     };
 
     this.fetchMonthData = this.fetchMonthData.bind(this);
@@ -266,11 +287,13 @@ class FieldDateAndTimeInput extends Component {
 
   onBookingStartDateChange = value => {
     const { monthlyTimeSlots, timeZone, intl, form } = this.props;
+    
     if (!value || !value.date) {
       form.batch(() => {
         form.change('bookingStartTime', null);
         form.change('bookingEndDate', { date: null });
         form.change('bookingEndTime', null);
+        form.change('bookingSeats', null);
       });
       // Reset the currentMonth too if bookingStartDate is cleared
       this.setState({ currentMonth: getMonthStartInTimeZone(TODAY, timeZone) });
@@ -291,10 +314,14 @@ class FieldDateAndTimeInput extends Component {
       startDate
     );
 
+    const maxNumberOfSeats = getValidNumberOfSeats(parseInt(startTime), timeSlotsOnSelectedDate);
+    this.setState({ maxNumberOfSeats });
+
     form.batch(() => {
       form.change('bookingStartTime', startTime);
       form.change('bookingEndDate', { date: endDate });
       form.change('bookingEndTime', endTime);
+      form.change('bookingSeats', 1);
     });
   };
 
@@ -304,13 +331,16 @@ class FieldDateAndTimeInput extends Component {
     const startDate = values.bookingStartDate.date;
     const timeSlotsOnSelectedDate = getTimeSlots(timeSlots, startDate, timeZone);
 
-    const { endDate, endTime } = getAllTimeValues(
+    const { startTime, endDate, endTime } = getAllTimeValues(
       intl,
       timeZone,
       timeSlotsOnSelectedDate,
       startDate,
       value
     );
+
+    const maxNumberOfSeats = getValidNumberOfSeats(parseInt(startTime), timeSlotsOnSelectedDate);
+    this.setState({ maxNumberOfSeats });
 
     form.batch(() => {
       form.change('bookingEndDate', { date: endDate });
@@ -379,15 +409,21 @@ class FieldDateAndTimeInput extends Component {
 
     const classes = classNames(rootClassName || css.root, className);
 
-    const bookingStartDate =
-      values.bookingStartDate && values.bookingStartDate.date ? values.bookingStartDate.date : null;
+    const bookingStartDate = values.bookingStartDate && values.bookingStartDate.date ? values.bookingStartDate.date : null;
     const bookingStartTime = values.bookingStartTime ? values.bookingStartTime : null;
-    const bookingEndDate =
-      values.bookingEndDate && values.bookingEndDate.date ? values.bookingEndDate.date : null;
+    const bookingEndDate = values.bookingEndDate && values.bookingEndDate.date ? values.bookingEndDate.date : null;
+    const bookingSeats = values.bookingSeats ? values.bookingSeats : null;
 
     const startTimeDisabled = !bookingStartDate;
     const endDateDisabled = !bookingStartDate || !bookingStartTime;
     const endTimeDisabled = !bookingStartDate || !bookingStartTime || !bookingEndDate;
+    const seatsDisabled = !bookingStartDate;
+
+    const getSeats = (min, max) => {
+      const seatsArray = [];
+      for(let i = min; i <= max; i++) seatsArray.push(i);
+      return seatsArray;
+    }
 
     const timeSlotsOnSelectedMonth = getMonthlyTimeSlots(
       monthlyTimeSlots,
@@ -449,6 +485,7 @@ class FieldDateAndTimeInput extends Component {
 
     const startTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.startTime' });
     const endTimeLabel = intl.formatMessage({ id: 'FieldDateTimeInput.endTime' });
+    const seatsLabel = intl.formatMessage({ id: 'FieldDateTimeInput.seats' });
     /**
      * NOTE: In this template the field for the end date is hidden by default.
      * If you want to enable longer booking periods, showing the end date in the form requires some code changes:
@@ -564,6 +601,20 @@ class FieldDateAndTimeInput extends Component {
               ) : (
                 <option>{placeholderTime}</option>
               )}
+            </FieldSelect>
+          </div>
+        </div>
+        <div className={css.formRow}>
+          <div className={css.field}>
+            <FieldSelect
+              name="bookingSeats"
+              id={formId ? `${formId}.bookingSeats` : 'bookingSeats'}
+              className={bookingSeats ? css.fieldSelect : css.fieldSelectDisabled}
+              selectClassName={bookingSeats ? css.select : css.selectDisabled}
+              label={seatsLabel}
+              disabled={seatsDisabled}
+            >
+              {bookingStartDate ? getSeats(1, this.state.maxNumberOfSeats).map(s => <option key={s} value={s}>{s}</option>) : <option disabled value="">5</option>}
             </FieldSelect>
           </div>
         </div>

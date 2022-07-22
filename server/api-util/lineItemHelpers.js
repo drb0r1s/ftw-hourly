@@ -201,3 +201,20 @@ exports.constructValidLineItems = lineItems => {
   });
   return lineItemsWithTotals;
 };
+
+// drb0r1s: Obtaining the seat price based on the number of seats.
+exports.resolveSeatPrice = (listing, seats) => {
+  const publicData = listing.attributes.publicData;
+  const seatPrice = publicData && publicData.seatPrice;
+  const { amount, currency } = seatPrice;
+
+  /*
+    drb0r1s:
+    If there is only one seat, then the price will not be calculated.
+    The goal is to add a special seat price only if the number of seats is greater than 1 (the first seat is free).
+  */
+ 
+  if(amount && currency) return new Money(seats > 1 ? amount : 0, currency);
+
+  return null;
+};

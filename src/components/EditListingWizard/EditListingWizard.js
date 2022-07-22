@@ -20,6 +20,7 @@ import { StripeConnectAccountForm } from '../../forms';
 
 import EditListingWizardTab, {
   AVAILABILITY,
+  CLASS_TYPES,
   DESCRIPTION,
   FEATURES,
   POLICY,
@@ -41,6 +42,7 @@ const availabilityMaybe = config.enableAvailability ? [AVAILABILITY] : [];
 export const TABS = [
   DESCRIPTION,
   FEATURES,
+  CLASS_TYPES,
   //POLICY,
   LOCATION,
   PRICING,
@@ -60,6 +62,8 @@ const tabLabel = (intl, tab) => {
     key = 'EditListingWizard.tabLabelDescription';
   } else if (tab === FEATURES) {
     key = 'EditListingWizard.tabLabelFeatures';
+  } else if(tab === CLASS_TYPES) {
+    key = 'EditListingWizard.tabLabelClassTypes';
   } else if (tab === POLICY) {
     key = 'EditListingWizard.tabLabelPolicy';
   } else if (tab === LOCATION) {
@@ -93,18 +97,20 @@ const tabCompleted = (tab, listing) => {
     publicData,
   } = listing.attributes;
   const images = listing.images;
-
+  
   switch (tab) {
     case DESCRIPTION:
       return !!(description && title);
     case FEATURES:
       return !!(publicData && publicData.yogaStyles);
+    case CLASS_TYPES:
+      return !!(publicData && publicData.classTypes);
     case POLICY:
       return !!(publicData && typeof publicData.rules !== 'undefined');
     case LOCATION:
       return !!(geolocation && publicData && publicData.location && publicData.location.address);
     case PRICING:
-      return !!price;
+      return !!(price && publicData.seatPrice);
     case AVAILABILITY:
       return !!availabilityPlan;
     case PHOTOS:

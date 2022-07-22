@@ -42,6 +42,9 @@ export const BookingBreakdownComponent = props => {
   const isCustomer = userRole === 'customer';
   const isProvider = userRole === 'provider';
 
+  // drb0r1s: This constant represents a special unit type, it serves to better represent the price of the seat.
+  const SEATS_UNIT_TYPE = "line-item/seats";
+
   const hasCommissionLineItem = transaction.attributes.lineItems.find(item => {
     const hasCustomerCommission = isCustomer && item.code === LINE_ITEM_CUSTOMER_COMMISSION;
     const hasProviderCommission = isProvider && item.code === LINE_ITEM_PROVIDER_COMMISSION;
@@ -96,9 +99,9 @@ export const BookingBreakdownComponent = props => {
         dateType={dateType}
         timeZone={timeZone}
       />
-      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
+      <LineItemUnitPriceMaybe transaction={transaction} unitType={unitType} specialUnitType={SEATS_UNIT_TYPE} intl={intl} />
 
-      <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} intl={intl} />
+      <LineItemBasePriceMaybe transaction={transaction} unitType={unitType} specialUnitType={SEATS_UNIT_TYPE} intl={intl} />
       <LineItemUnknownItemsMaybe transaction={transaction} isProvider={isProvider} intl={intl} />
 
       <LineItemSubTotalMaybe

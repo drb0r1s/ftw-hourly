@@ -30,7 +30,9 @@ const EditListingPricingPanel = props => {
 
   const classes = classNames(rootClassName || css.root, className);
   const currentListing = ensureOwnListing(listing);
-  const { price } = currentListing.attributes;
+  const { price, publicData } = currentListing.attributes;
+
+  console.log(currentListing);
 
   const isPublished = currentListing.id && currentListing.attributes.state !== LISTING_STATE_DRAFT;
   const panelTitle = isPublished ? (
@@ -48,12 +50,20 @@ const EditListingPricingPanel = props => {
     <FormattedMessage id="EditListingPricingPanel.createListingTitle" />
   );
 
+  // drb0r1s: Another constant has been added here, which will store information about the price of seats in publicData.
+  const seatPrice = publicData && publicData.seatPrice ? publicData.seatPrice : null;
+  const seatPriceAsMoney = seatPrice ? new Money(seatPrice.amount, seatPrice.currency) : null;
+
   const priceCurrencyValid = price instanceof Money ? price.currency === config.currency : true;
   const form = priceCurrencyValid ? (
     <EditListingPricingForm
       className={css.form}
-      initialValues={{ price }}
-      onSubmit={onSubmit}
+      initialValues={{ price, seatPrice: seatPriceAsMoney }}
+      onSubmit={values => {
+        const { price, seatPrice } = values;
+        const updatedValues = { price, publicData: { seatPrice: { amount: seatPrice.amount, currency: seatPrice.currency } } };
+        onSubmit(updatedValues);
+      }}
       onChange={onChange}
       saveActionMsg={submitButtonText}
       disabled={disabled}
