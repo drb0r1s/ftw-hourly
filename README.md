@@ -4,6 +4,6 @@
 
 # About
 - This is the version of **Sharetribe FTW-Hourly** with new features. 
-- The website called YogaTime has been improved, two new features have been added:
--- one
--- two
+- The website called *YogaTime* has been updated with *two new features*:
+  - Online/Offline Wizard Tab
+  - Seats system
