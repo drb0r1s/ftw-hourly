@@ -26,3 +26,7 @@ Location of the files:
     └── forms
         └── EditListingClassTypesForm
 ```
+
+## Seats system
+- This is a system that provides the ability to add **how many seats there are at each time slot**.
+- The location where it is possible to add the number of seats is the *Availability Wizard Tab*. This means that it is possible to change the number of available seats for each time slot when editing the *Teacher profile*.
