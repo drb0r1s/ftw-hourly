@@ -134,6 +134,10 @@ You need to change the parameters of this function:
 </>
 ```
 
+## Sharetribe
+*Sharetribe FTW Docs:* <a href="https://www.sharetribe.com/docs/"><b>Docs</b></a><br>
+*Sharetribe FTW-Hourly Repository:* <a href="https://github.com/sharetribe/ftw-hourly"><b>sharetribe/ftw-hourly</b></a>
+
 ## Author
 
 **drb0r1s**
