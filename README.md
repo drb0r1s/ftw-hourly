@@ -119,12 +119,19 @@ In this way, the logic related to payment can be **easily changed**.
 ```
 └── src
     └── forms
-        └── BookingTimeForm
-            └── FieldDateAndTimeInput.js
         └── EditListingAvailabilityExceptionForm
             └── EditListingAvailabilityExceptionForm.js
         └── EditListingAvailabilityPlanForm
             └── EditListingAvailabilityPlanForm.js
+```
+You need to change the parameters of this function:
+```js
+<>
+  <option disabled value="">{seatsPlaceholder}</option>
+    {getSeats(2, 16).map(s => {
+      return <option key={s} value={s}>{s}</option>;
+    })}
+</>
 ```
 
 ## Author
