@@ -79,6 +79,7 @@ exports.resolveSeatPrice = (listing, seats) => {
 In this way, the logic related to payment can be **easily changed**.
 
 ## How can I get information about what has been added/changed in the code in this update?
+All important information related to the code in this update can be found in the comments starting with `drb0r1s:`.
 
 ## Author
 
