@@ -84,6 +84,7 @@ You need to delete the `validate` prop as follows:
   label={onlineClassTitle}
   placeholder={onlineClassPlaceholder}
   maxLength={ONLINE_CLASS_MAX_LENGTH}
+  //validate={composeValidators(required(onlineClassTitleRequired), maxLength100Message)}
   autoFocus
 />}
 ```
