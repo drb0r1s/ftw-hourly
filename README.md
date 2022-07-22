@@ -51,6 +51,11 @@ Location of the files:
 ### Development
 The *Seat system* is implemented through existing files that are already available in **Sharetribe FTW-Hourly**.
 
+## Additional information
+
+### How does charging per seat work?
+It is important to note that if the user buys only *one seat (default)*, he **will not be charged** any seat price *(1 seat = $0.00)*.
+
 ## Author
 
 **drb0r1s**
