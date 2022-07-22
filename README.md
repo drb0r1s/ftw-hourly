@@ -79,7 +79,18 @@ exports.resolveSeatPrice = (listing, seats) => {
 In this way, the logic related to payment can be **easily changed**.
 
 ## How can I get information about what has been added/changed in the code in this update?
-All important information related to the code in this update can be found in the comments starting with `drb0r1s:`.
+**All important information** related to the code in this update can be found in the comments starting with `drb0r1s:`.
+Example:
+```js
+/*
+  drb0r1s:
+  Based on all time slots in a given day,
+  the function determines the exact number of seats for the specified time.
+  Called every time startDate and startTime change.
+*/
+
+const getValidNumberOfSeats = (startTime, timeSlots) => {...}
+```
 
 ## Author
 
