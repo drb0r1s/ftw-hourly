@@ -48,6 +48,9 @@ Location of the files:
 - User:
   - When the user wants to *book a certain teacher*, it will be **necessary** to select the *number of seats* he wants to book.
 
+### Development
+The *Seat system* is implemented through existing files that are already available in **Sharetribe FTW-Hourly**.
+
 ## Author
 
 **drb0r1s**
