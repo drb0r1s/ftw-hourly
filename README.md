@@ -143,5 +143,5 @@ You need to change the parameters of this function:
 **drb0r1s**
 
 *Github:* **drb0r1s**<br>
-*Discord:* **boris**#1171<br>
-*Email:* **drb0r1sdev@gmail.com**
+*Discord:* **drb0r1s**#9999<br>
+*Email:* **contact@drb0r1s.xyz*
