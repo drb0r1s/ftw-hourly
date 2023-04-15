@@ -144,4 +144,4 @@ You need to change the parameters of this function:
 
 *Github:* **drb0r1s**<br>
 *Discord:* **drb0r1s**#9999<br>
-*Email:* **contact@drb0r1s.xyz*
+*Email:* **contact@drb0r1s.xyz**
